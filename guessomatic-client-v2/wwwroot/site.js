@@ -1,7 +1,7 @@
 
 
-var apiBaseAddressToCall = "https://livio-guessomatic-server.azurewebsites.net";
-var bearerToken = ""
+var apiBaseAddressToCall = "https://livio-guessomatic-server-v2.azurewebsites.net";
+var bearerToken = "bearerDummy"
 
 function getToken(){
     $.ajax({
@@ -25,15 +25,35 @@ function startGame(){
         cache: false,
         type: "GET",
         beforeSend: function (xhr) {
-            xhr.setRequestHeader('Bearer', bearerToken);
+            xhr.setRequestHeader('Authorization','Bearer ' + bearerToken);
         },
         success: function(response) {
+            console.log(response);
             document.getElementById('playerGuid').value = response;
             document.getElementById('playButton').disabled = false;
             document.getElementById('revealSolution').disabled = false;
             document.getElementById('solution').innerText = '';
             document.getElementById('answer').innerText = ''; 
             document.getElementById('yourGuess').value ='';              
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText);
+        }
+    });
+
+}
+
+function checkHeaders(){
+    console.log("Bearer token is:" + bearerToken);
+     $.ajax({
+        url: apiBaseAddressToCall + "/getAllHeaders",
+        cache: false,
+        type: "GET",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization','Bearer ' + bearerToken);
+        },
+        success: function(response) {
+            console.log(JSON.stringify(response));       
         },
         error: function(xhr) {
             console.log(xhr.responseText);

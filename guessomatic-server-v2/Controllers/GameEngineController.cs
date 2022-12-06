@@ -5,7 +5,7 @@ using Microsoft.Identity.Web.Resource;
 
 namespace guessomatic_server_v2.Controllers;
 
-//[Authorize]
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 //[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
@@ -19,9 +19,22 @@ public class GameEngineController : ControllerBase
         this._playerGuids = inMemoryDatabase.PlayerGuids;
     }
 
+    [AllowAnonymous]
+    [HttpGet("~/getAllHeaders")]
+    public ActionResult<Dictionary<string, string>> GetAllHeaders()
+    {
+        Dictionary<string, string> requestHeaders =
+            new Dictionary<string, string>();
+        foreach (var header in Request.Headers)
+        {
+            requestHeaders.Add(header.Key, header.Value);
+        }
+        return requestHeaders;
+    }
+
     [HttpGet("~/startgame")]
     public string StartGame(){
-
+        System.Diagnostics.Trace.TraceError("Calling StartGame...");
         Guid playerGuid = Guid.NewGuid();
         int randomNumber = Random.Shared.Next(1, 10001);
         _playerGuids.Add(new KeyValuePair<Guid, int>(playerGuid,randomNumber));       
