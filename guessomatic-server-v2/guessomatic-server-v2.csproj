@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-guessomatic_server-v2-ae91bfac-a7ac-4876-abdd-74a9394354b4</UserSecretsId>
-    <RootNamespace>guessomatic_server-v2</RootNamespace>
+    <RootNamespace>guessomatic_server_v2</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
